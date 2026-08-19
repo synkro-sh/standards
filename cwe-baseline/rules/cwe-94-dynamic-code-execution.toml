@@ -1,0 +1,21 @@
+schema_version = 1
+id = "cwe-94-dynamic-code-execution"
+title = "Dynamic code execution"
+description = "Evaluating code assembled at runtime (CWE-94) turns any data that reaches it into a program, so a value the caller does not control becomes an execution path nobody reviewed."
+mode = "block"
+severity = "high"
+remediation = "Replace dynamic code execution with an allowlisted parser or dispatcher."
+evaluation = { kind = "deterministic", predicate = { kind = "cwe_regex", cwe_id = "CWE-94", path_glob = "**/*", pattern = "\\b(eval|Function)\\s*\\(", requires_full_content = false, severity = "high" } }
+
+[[examples]]
+expected = "violation"
+input = { kind = "content", path = "src/render.js", content = "const result = eval(userExpression)", coverage = "fragment" }
+
+[[examples]]
+expected = "violation"
+input = { kind = "content", path = "src/render.js", content = "const fn = new Function(body)", coverage = "fragment" }
+
+[[examples]]
+expected = "ok"
+note = "Parsing data is not executing it."
+input = { kind = "content", path = "src/render.js", content = "const result = JSON.parse(payload)", coverage = "fragment" }

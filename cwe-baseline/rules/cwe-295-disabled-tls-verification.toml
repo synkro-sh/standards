@@ -1,0 +1,21 @@
+schema_version = 1
+id = "cwe-295-disabled-tls-verification"
+title = "Disabled TLS verification"
+description = "Turning off certificate verification (CWE-295) makes an encrypted connection unauthenticated, so anything able to intercept it can read and rewrite the traffic while the code still reports TLS."
+mode = "block"
+severity = "high"
+remediation = "Enable certificate verification and configure a trusted CA."
+evaluation = { kind = "deterministic", predicate = { kind = "cwe_regex", cwe_id = "CWE-295", path_glob = "**/*", pattern = "(?i)(rejectUnauthorized\\s*:\\s*false|verify\\s*=\\s*false)", requires_full_content = false, severity = "high" } }
+
+[[examples]]
+expected = "violation"
+input = { kind = "content", path = "src/fetch.js", content = "const agent = new https.Agent({ rejectUnauthorized: false })", coverage = "fragment" }
+
+[[examples]]
+expected = "violation"
+input = { kind = "content", path = "src/fetch.py", content = "requests.get(url, verify=False)", coverage = "fragment" }
+
+[[examples]]
+expected = "ok"
+note = "Naming a CA bundle keeps verification on."
+input = { kind = "content", path = "src/fetch.py", content = "requests.get(url, verify=\"/etc/ssl/certs/ca.pem\")", coverage = "fragment" }
