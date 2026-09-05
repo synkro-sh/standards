@@ -5,7 +5,8 @@ description = "MD5 and SHA-1 are broken (CWE-327) for collision resistance, so a
 mode = "block"
 severity = "high"
 remediation = "Use a current cryptographic primitive; use Argon2 or scrypt for passwords."
-evaluation = { kind = "deterministic", predicate = { kind = "cwe_regex", cwe_id = "CWE-327", path_glob = "**/*", pattern = "(?i)\\b(md5|sha1)\\s*\\(", requires_full_content = false, severity = "high" } }
+metadata = { cwe = "CWE-327" }
+evaluation = { kind = "deterministic", predicate = { kind = "content_regex", path_glob = "**/*", pattern = "(?i)\\b(md5|sha1)\\s*\\(", requires_full_content = false } }
 
 [[examples]]
 expected = "violation"

@@ -5,7 +5,8 @@ description = "Turning off certificate verification (CWE-295) makes an encrypted
 mode = "block"
 severity = "high"
 remediation = "Enable certificate verification and configure a trusted CA."
-evaluation = { kind = "deterministic", predicate = { kind = "cwe_regex", cwe_id = "CWE-295", path_glob = "**/*", pattern = "(?i)(rejectUnauthorized\\s*:\\s*false|verify\\s*=\\s*false)", requires_full_content = false, severity = "high" } }
+metadata = { cwe = "CWE-295" }
+evaluation = { kind = "deterministic", predicate = { kind = "content_regex", path_glob = "**/*", pattern = "(?i)(rejectUnauthorized\\s*:\\s*false|verify\\s*=\\s*false)", requires_full_content = false } }
 
 [[examples]]
 expected = "violation"

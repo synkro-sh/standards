@@ -5,7 +5,8 @@ description = "Evaluating code assembled at runtime (CWE-94) turns any data that
 mode = "block"
 severity = "high"
 remediation = "Replace dynamic code execution with an allowlisted parser or dispatcher."
-evaluation = { kind = "deterministic", predicate = { kind = "cwe_regex", cwe_id = "CWE-94", path_glob = "**/*", pattern = "\\b(eval|Function)\\s*\\(", requires_full_content = false, severity = "high" } }
+metadata = { cwe = "CWE-94" }
+evaluation = { kind = "deterministic", predicate = { kind = "content_regex", path_glob = "**/*", pattern = "\\b(eval|Function)\\s*\\(", requires_full_content = false } }
 
 [[examples]]
 expected = "violation"
